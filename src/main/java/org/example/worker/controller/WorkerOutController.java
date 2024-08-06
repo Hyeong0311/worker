@@ -23,7 +23,7 @@ public class WorkerOutController extends HttpServlet {
         log.info("out - " + wid);
 
         try {
-            ScheduleDAO.INSTANCE.stime(wid);
+            ScheduleDAO.INSTANCE.otime(wid);
             resp.sendRedirect("/main");
         } catch (Exception e) {
             throw new RuntimeException(e);

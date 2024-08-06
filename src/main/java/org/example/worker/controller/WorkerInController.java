@@ -23,7 +23,7 @@ public class WorkerInController extends HttpServlet {
 
 
         try {
-            ScheduleDAO.INSTANCE.otime(wid);
+            ScheduleDAO.INSTANCE.stime(wid);
             resp.sendRedirect("/main");
         } catch (Exception e) {
             throw new RuntimeException(e);

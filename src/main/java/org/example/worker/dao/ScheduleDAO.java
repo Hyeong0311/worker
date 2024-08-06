@@ -14,7 +14,7 @@ public enum ScheduleDAO  {
 
     public void stime(Integer wid) throws Exception {
 
-        String sql = "insert into schedule(wid,in_time) values(?,now())";
+        String sql = "insert into schedule (wid, time, category) values(?, now(),'in')";
 
         @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
         @Cleanup PreparedStatement ps = con.prepareStatement(sql);
@@ -29,7 +29,7 @@ public enum ScheduleDAO  {
 
     public void otime(Integer wid) throws Exception {
 
-        String sql = "insert into schedule(wid,out_time) values(?,now())";
+        String sql = "insert into schedule (wid, time, category) values(?, now(),'out')";
 
         @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
         @Cleanup PreparedStatement ps = con.prepareStatement(sql);
