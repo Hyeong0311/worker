@@ -16,7 +16,7 @@ public enum AdminDAO {
     AdminDAO() {
     }
 
-    public Integer aInsert(AdminVO adminVO) throws Exception {
+    public void aInsert(AdminVO adminVO) throws Exception {
 
         String sql = "insert into admin (aid, apw) values (?, ?)";
 
@@ -32,11 +32,6 @@ public enum AdminDAO {
             throw new Exception();
         }
 
-        return adminVO.getAno();
     }
-
-
-    }
-
 
 }
