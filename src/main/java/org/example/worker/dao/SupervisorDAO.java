@@ -7,6 +7,7 @@ import org.example.worker.vo.SupervisorVO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 @Log4j2
 public enum SupervisorDAO {
@@ -35,4 +36,29 @@ public enum SupervisorDAO {
         return supervisorVO.getSno();
     }
 
+    public SupervisorVO loginSupervisor(String sid, String dept) throws Exception {
+        SupervisorVO supervisorVO = null;
+
+        String sql = "SELECT * FROM supervisor WHERE sid = ? AND dept = ? AND sdelflag = false";
+
+        @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
+        @Cleanup PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setString(1, sid);
+        ps.setString(2, dept);
+
+        @Cleanup ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            supervisorVO = SupervisorVO.builder()
+                    .sno(rs.getInt("sno"))
+                    .sid(rs.getString("sid"))
+                    .spw(rs.getString("spw"))
+                    .dept(rs.getString("dept"))
+                    .sdelflag(rs.getBoolean("sdelflag"))
+                    .build();
+        }
+
+        return supervisorVO;
+    }
 }

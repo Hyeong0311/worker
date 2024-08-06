@@ -29,16 +29,18 @@ public class SupervisorController extends HttpServlet {
 
         log.info("받은 파라미터 - 부서명: {}, 아이디: {}, 비밀번호: {}", dept, sid, spw);
 
-        SupervisorVO managerVO = SupervisorVO.builder()
-                .sid(sid)
-                .spw(spw)
-                .dept(dept)
-                .build();
-
         try {
-            SupervisorDAO.INSTANCE.mInsert(managerVO);
-            resp.sendRedirect("/slogin");
+            SupervisorVO supervisorVO = SupervisorDAO.INSTANCE.loginSupervisor(sid, dept);
+            if (supervisorVO != null && supervisorVO.getSpw().equals(spw)) {
+                log.info("로그인 성공 - 부서명: {}, 아이디: {}", dept, sid);
+                resp.sendRedirect("/nextPage"); // 로그인 성공 후 이동할 페이지
+            } else {
+                log.info("로그인 실패 - 잘못된 아이디 또는 비밀번호");
+                req.setAttribute("errorMessage", "잘못된 아이디 또는 비밀번호입니다.");
+                req.getRequestDispatcher("/WEB-INF/slogin.jsp").forward(req, resp);
+            }
         } catch (Exception e) {
+            log.error("로그인 중 오류 발생", e);
             throw new RuntimeException(e);
         }
     }

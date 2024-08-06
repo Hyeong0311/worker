@@ -19,16 +19,16 @@
                     <form action="/login/supervisor" method="post">
                         <div class="form-group">
                             <div>
-                                <input type="radio" id="manager" name="role" value="manager" required>
+                                <input type="radio" id="manager" name="dept" value="manager" required>
                                 <label for="manager">Manager</label>
-                                <input type="radio" id="hrd" name="role" value="hrd" required>
+                                <input type="radio" id="hrd" name="dept" value="hrd" required>
                                 <label for="hrd">HRD</label>
-                                <input type="radio" id="admin" name="role" value="admin" required>
+                                <input type="radio" id="admin" name="dept" value="admin" required>
                                 <label for="admin">Admin</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="sid">ID</label>
+                            <label for="sid">아이디</label>
                             <input type="text" class="form-control" id="sid" name="sid" required>
                         </div>
                         <div class="form-group">
