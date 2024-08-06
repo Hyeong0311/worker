@@ -12,8 +12,8 @@ import java.sql.Timestamp;
 
 public class ScheduleVO {
     private Integer scno;
-    private String wid;
-    private Timestamp in;
-    private Timestamp out;
+    private Integer wid;
+    private Timestamp time;
+    private String category;
     private String note;
 }
