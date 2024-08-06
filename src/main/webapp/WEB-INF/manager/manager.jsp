@@ -13,8 +13,8 @@
 <body>
     <h1>hello hello</h1>
     <form action="/supervisor" method="post">
-        <input type="text" name="mid">
-        <input type="text" name="mpw">
+        <input type="text" name="sid">
+        <input type="text" name="spw">
         <input type="text" name="dept">
         <button type = "submit">submit</button>
     </form>

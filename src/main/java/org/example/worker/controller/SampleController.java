@@ -24,17 +24,17 @@ public class SampleController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String mid = req.getParameter("mid");
-        String mpw = req.getParameter("mpw");
+        String sid = req.getParameter("sid");
+        String spw = req.getParameter("spw");
         String dept = req.getParameter("dept");
 
-        log.info("mid = " + mid + " mpw = " + mpw + " dept = " + dept);
+        log.info("sid = " + sid + " spw = " + spw + " dept = " + dept);
 
         SupervisorVO managerVO = SupervisorVO.builder()
-                .mid(mid)
-                .mpw(mpw)
+                .sid(sid)
+                .spw(spw)
                 .dept(dept)
-                .mdelflag(false)
+                .sdelflag(false)
                 .build();
 
         try {
