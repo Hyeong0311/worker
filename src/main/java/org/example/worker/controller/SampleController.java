@@ -34,11 +34,10 @@ public class SampleController extends HttpServlet {
                 .sid(sid)
                 .spw(spw)
                 .dept(dept)
-                .sdelflag(false)
                 .build();
 
         try {
-            Integer mno = SupervisorDAO.INSTANCE.mInsert(managerVO);
+            SupervisorDAO.INSTANCE.mInsert(managerVO);
             resp.sendRedirect("/supervisor");
         } catch (Exception e) {
             throw new RuntimeException(e);
