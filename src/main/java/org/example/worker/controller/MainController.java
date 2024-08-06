@@ -9,16 +9,14 @@ import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 
-
-@WebServlet (value="/login/worker")
+@WebServlet(value="/main")
 @Log4j2
-
-public class WorkerLoginController extends HttpServlet {
+public class MainController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info("main get");
 
-        req.getRequestDispatcher("/login/worker.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, resp);
     }
-
 }
