@@ -42,3 +42,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Ignore ConnectionUtil.java file
+src/main/java/org/example/worker/common/ConnectionUtil.java
