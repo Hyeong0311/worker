@@ -19,7 +19,7 @@ public class SampleController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         log.info("doGet");
-        req.getRequestDispatcher("/WEB-INF/manager/manager.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/supervisor/supervisor.jsp").forward(req, resp);
     }
 
     @Override
