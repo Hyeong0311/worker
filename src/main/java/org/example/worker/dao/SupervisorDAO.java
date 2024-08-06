@@ -15,7 +15,7 @@ public enum SupervisorDAO {
     SupervisorDAO() {
     }
 
-    public Integer mInsert(SupervisorVO managerVO) throws Exception {
+    public void mInsert(SupervisorVO managerVO) throws Exception {
 
         String sql = "insert into supervisor (sid, spw, dept) values (?, ?, ?)";
 
@@ -31,8 +31,6 @@ public enum SupervisorDAO {
         if (count != 1) {
             throw new Exception();
         }
-
-        return managerVO.getSno();
     }
 
 }
