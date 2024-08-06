@@ -9,10 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 
-public class ManagerVO {
-    private Integer mno;
-    private String mid;
-    private String mpw;
+public class SupervisorVO {
+    private Integer sno;
+    private String sid;
+    private String spw;
     private String dept;
-    private boolean mdelflag;
+    private boolean sdelflag;
 }
