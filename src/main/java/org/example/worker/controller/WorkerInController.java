@@ -19,11 +19,11 @@ public class WorkerInController extends HttpServlet {
 
         Integer wid = Integer.parseInt(req.getParameter("wid"));
 
-        log.info(wid);
+        log.info("in - " + wid);
 
 
         try {
-            ScheduleDAO.INSTANCE.otime(wid);
+            ScheduleDAO.INSTANCE.stime(wid);
             resp.sendRedirect("/main");
         } catch (Exception e) {
             throw new RuntimeException(e);

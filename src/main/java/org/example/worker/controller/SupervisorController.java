@@ -33,7 +33,21 @@ public class SupervisorController extends HttpServlet {
             SupervisorVO supervisorVO = SupervisorDAO.INSTANCE.loginSupervisor(sid, dept);
             if (supervisorVO != null && supervisorVO.getSpw().equals(spw)) {
                 log.info("로그인 성공 - 부서명: {}, 아이디: {}", dept, sid);
-                resp.sendRedirect("/nextPage"); // 로그인 성공 후 이동할 페이지
+                switch (dept) {
+                    case "manager":
+                        resp.sendRedirect("/page/normal"); // manager 선택 시 이동할 페이지
+                        break;
+                    case "hrd":
+                        resp.sendRedirect("/page/hr"); // HRD 선택 시 이동할 페이지
+                        break;
+                    case "admin":
+                        resp.sendRedirect("/page/admin"); // admin 선택 시 이동할 페이지
+                        break;
+                    default:
+                        log.info("잘못된 부서 선택");
+                        req.setAttribute("errorMessage", "잘못된 부서 선택입니다.");
+                        req.getRequestDispatcher("/WEB-INF/slogin.jsp").forward(req, resp);
+                }
             } else {
                 log.info("로그인 실패 - 잘못된 아이디 또는 비밀번호");
                 req.setAttribute("errorMessage", "잘못된 아이디 또는 비밀번호입니다.");
