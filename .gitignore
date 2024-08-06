@@ -45,3 +45,4 @@ bin/
 
 # Ignore ConnectionUtil.java file
 src/main/java/org/example/worker/common/ConnectionUtil.java
+src/main/java/org/example/worker/controller/SampleController.java

@@ -19,7 +19,7 @@ public class WorkerInController extends HttpServlet {
 
         Integer wid = Integer.parseInt(req.getParameter("wid"));
 
-        log.info(wid);
+        log.info("in - " + wid);
 
 
         try {

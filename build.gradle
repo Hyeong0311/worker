@@ -44,6 +44,8 @@ dependencies {
     implementation 'org.slf4j:slf4j-simple:2.0.13'
 
     implementation 'com.zaxxer:HikariCP:5.0.1'
+
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.3'
 }
 
 test {

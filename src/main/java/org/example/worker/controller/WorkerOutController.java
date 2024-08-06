@@ -20,7 +20,7 @@ public class WorkerOutController extends HttpServlet {
 
         Integer wid = Integer.parseInt(req.getParameter("wid"));
 
-        log.info(wid);
+        log.info("out - " + wid);
 
         try {
             ScheduleDAO.INSTANCE.stime(wid);
