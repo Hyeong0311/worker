@@ -17,19 +17,17 @@ public class SupervisorLoginController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.info("Supervisor Login Page");
 
-        log.info(req.getParameter("id"));
-        log.info(req.getParameter("pw"));
-
-
-        req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        log.info("Supervsior post");
 
+        log.info(req.getParameter("id"));
+        log.info(req.getParameter("pw"));
 
-
+        resp.sendRedirect("/page/normal");
 
 
 

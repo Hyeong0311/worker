@@ -14,17 +14,18 @@
 <body>
     <h1>hr page</h1>
 
-    <c:if test="${list == null}">
-        <h3>null</h3>
-    </c:if>
 
-    <c:forEach items="${list}" var="schedule">
-        <li>
-            <div>
-                <div>${schedule}</div>
-            </div>
-        </li>
-    </c:forEach>
+<%--    <c:if test="${list == null}">--%>
+<%--        <h3>null</h3>--%>
+<%--    </c:if>--%>
+
+<%--    <c:forEach items="${list}" var="schedule">--%>
+<%--        <li>--%>
+<%--            <div>--%>
+<%--                <div>${schedule}</div>--%>
+<%--            </div>--%>
+<%--        </li>--%>
+<%--    </c:forEach>--%>
 
 </body>
 </html>
