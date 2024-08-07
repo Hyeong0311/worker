@@ -23,17 +23,16 @@ public class SupervisorController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String dept = req.getParameter("dept");
         String sid = req.getParameter("sid");
         String spw = req.getParameter("spw");
 
-        log.info("받은 파라미터 - 부서명: {}, 아이디: {}, 비밀번호: {}", dept, sid, spw);
+        log.info("받은 파라미터 - 아이디: {}, 비밀번호: {}", sid, spw);
 
         try {
-            SupervisorVO supervisorVO = SupervisorDAO.INSTANCE.loginSupervisor(sid, dept);
+            SupervisorVO supervisorVO = SupervisorDAO.INSTANCE.loginSupervisor(sid);
             if (supervisorVO != null && supervisorVO.getSpw().equals(spw)) {
-                log.info("로그인 성공 - 부서명: {}, 아이디: {}", dept, sid);
-                switch (dept) {
+                log.info("로그인 성공 - 아이디: {}", sid);
+                switch (supervisorVO.getDept()) {
                     case "manager":
                         resp.sendRedirect("/page/normal"); // manager 선택 시 이동할 페이지
                         break;
@@ -44,8 +43,8 @@ public class SupervisorController extends HttpServlet {
                         resp.sendRedirect("/page/admin"); // admin 선택 시 이동할 페이지
                         break;
                     default:
-                        log.info("잘못된 부서 선택");
-                        req.setAttribute("errorMessage", "잘못된 부서 선택입니다.");
+                        log.info("잘못된 부서 정보");
+                        req.setAttribute("errorMessage", "잘못된 부서 정보입니다.");
                         req.getRequestDispatcher("/WEB-INF/slogin.jsp").forward(req, resp);
                 }
             } else {
