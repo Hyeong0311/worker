@@ -7,32 +7,46 @@ import org.example.worker.vo.SupervisorVO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Optional;
 
 @Log4j2
 public enum SupervisorDAO {
     INSTANCE;
 
-    SupervisorDAO() {
-    }
 
-    public Integer mInsert(SupervisorVO supervisorVO) throws Exception {
+    public Optional<SupervisorVO> get(String sid, String spw, String dept) throws Exception{
 
-        String sql = "insert into supervisor (sid, spw, dept) values (?, ?, ?)";
-
+        String sql = """
+                select * from supervisor
+                where
+                    sid = ?
+                and
+                    spw = ?
+                and
+                    dept = ?
+                and
+                    sdelflag = 0
+                ;
+                """;
         @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
         @Cleanup PreparedStatement ps = con.prepareStatement(sql);
-
-        ps.setString(1, supervisorVO.getSid());
-        ps.setString(2, supervisorVO.getSpw());
-        ps.setString(3, supervisorVO.getDept());
-
-        int count = ps.executeUpdate();
-
-        if (count != 1) {
-            throw new Exception();
+        ps.setString(1, sid);
+        ps.setString(2, spw);
+        ps.setString(3, dept);
+        @Cleanup ResultSet rs = ps.executeQuery();
+        if (!rs.next()) {
+            return Optional.empty();
         }
 
-        return supervisorVO.getSno();
+        SupervisorVO vo = SupervisorVO.builder()
+                .sid(rs.getString("sid"))
+                .spw(rs.getString("spw"))
+                .dept(rs.getString("dept"))
+                .sdelflag(rs.getBoolean("sdelflag"))
+                .build();
+
+        return Optional.of(vo);
     }
 
 }

@@ -3,47 +3,60 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Supervisor Login</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function setFormAction() {
+            // 라디오 버튼 중에서 선택된 값 가져오기
+            var selectedValue = document.querySelector('input[name="option"]:checked').value;
+
+            // 폼의 action 속성을 선택된 값에 따라 설정
+            var form = document.getElementById('myForm');
+            if (selectedValue === "supervisor") {
+                form.action = "/login/supervisor";
+            } else if (selectedValue === "hr") {
+                form.action = "/login/hr";
+            } else if (selectedValue === "ad") {
+                form.action = "/login/admin";
+            }
+        }
+    </script>
 </head>
 <body>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card mt-5">
-                <div class="card-header">
-                    <h3 class="text-center">Supervisor Login</h3>
-                </div>
-                <div class="card-body">
-                    <form action="/login/supervisor" method="post">
-                        <div class="form-group">
-                            <div>
-                                <input type="radio" id="manager" name="role" value="manager" required>
-                                <label for="manager">Manager</label>
-                                <input type="radio" id="hrd" name="role" value="hrd" required>
-                                <label for="hrd">HRD</label>
-                                <input type="radio" id="admin" name="role" value="admin" required>
-                                <label for="admin">Admin</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="sid">ID</label>
-                            <input type="text" class="form-control" id="sid" name="sid" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="spw">비밀번호</label>
-                            <input type="password" class="form-control" id="spw" name="spw" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">로그인</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<form id="myForm" method="post" onsubmit="setFormAction()">
+    <input type="radio" name="option" value="supervisor" id="supervisor">
+    <label for="supervisor">Supervisor</label><br>
+
+    <input type="radio" name="option" value="hr" id="hr">
+    <label for="hr">HRD</label><br>
+
+    <input type="radio" name="option" value="ad" id="ad">
+    <label for="ad">Admin</label><br><br>
+
+    <input type="text" name="id">
+    <input type="password" name="pw">
+    <button type="submit">Submit</button>
+</form>
+
+
+<%--<form action="/login/supervisor" method="post">--%>
+
+<%--    <input type="radio" name="dept" value="a-dept" required>--%>
+<%--    <label>a-dept</label>--%>
+
+<%--    <input type="radio" name="dept" value="b-dept" required>--%>
+<%--    <label>b-dept</label>--%>
+
+<%--    <input type="radio" name="dept" value="c-dept" required>--%>
+<%--    <label>c-dept</label>--%>
+
+<%--    <label>ID</label>--%>
+<%--    <input type="text" name="sid">--%>
+
+<%--    <label>PW</label>--%>
+<%--    <input type="password" name="spw">--%>
+<%--    <button>submit</button>--%>
+<%--</form>--%>
+
 </body>
 </html>
