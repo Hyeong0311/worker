@@ -30,14 +30,20 @@ public class SupervisorRegisterController extends HttpServlet {
         String spw = req.getParameter("spw");
         String dept = req.getParameter("dept");
 
-        SupervisorVO supervisor = SupervisorVO.builder()
-                .sid(sid)
-                .spw(spw)
-                .dept(dept)
-                .sdelflag(false)
-                .build();
-
         try {
+            if (SupervisorDAO.INSTANCE.isSupervisorIdExist(sid)) {
+                req.setAttribute("error", "이미 사용중인 ID입니다. 다른 ID를 입력해주세요");
+                req.getRequestDispatcher("/WEB-INF/mregister.jsp").forward(req, resp);
+                return;
+            }
+
+            SupervisorVO supervisor = SupervisorVO.builder()
+                    .sid(sid)
+                    .spw(spw)
+                    .dept(dept)
+                    .sdelflag(false)
+                    .build();
+
             SupervisorDAO.INSTANCE.sInsert(supervisor);
             resp.sendRedirect("/page/admin"); // 성공 후 admin 페이지로 리디렉션
         } catch (Exception e) {
