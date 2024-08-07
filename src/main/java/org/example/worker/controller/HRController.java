@@ -14,11 +14,13 @@ import java.io.IOException;
 import java.util.List;
 
 @Log4j2
-@WebServlet(value = "/page/hr")
+@WebServlet(value = "/page/hrlist")
 public class HRController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        log.info("HRController");
 
         try {
             List<HRListDTO> scheduleList = ScheduleDAO.INSTANCE.HRList();

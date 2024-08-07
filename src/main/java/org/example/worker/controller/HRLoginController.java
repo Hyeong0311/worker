@@ -21,6 +21,8 @@ public class HRLoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        log.info("HRLoginController");
+
         resp.sendRedirect("/page/hr");
     }
 }
