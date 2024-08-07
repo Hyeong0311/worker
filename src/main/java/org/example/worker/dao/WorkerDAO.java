@@ -4,6 +4,7 @@ import lombok.Cleanup;
 import lombok.extern.log4j.Log4j2;
 import org.example.worker.common.ConnectionUtil;
 import org.example.worker.vo.SupervisorDTO;
+import org.example.worker.vo.SupervisorVO;
 import org.example.worker.vo.WorkerVO;
 
 import java.sql.Connection;
@@ -70,17 +71,15 @@ public enum WorkerDAO {
         return total;
     }
 
-    public List<SupervisorDTO> wListSuper(String sid , Integer page) throws Exception {
+    public List<WorkerVO> wListSuper(String sid , Integer page) throws Exception {
 
         int skip = (page - 1) *10;
 
         String sql = """
-                select
-                    worker.wname, schedule.category, worker.wid
-                from
-                    worker inner join schedule on worker.wid = schedule.wid
-                where
-                    worker.sid = ?
+                SELECT w.*, s.time AS schedule_time
+                FROM worker w
+                         LEFT JOIN schedule s ON w.wid = s.wid
+                WHERE w.wno > 0 AND w.wdelflag = 0 AND w.sid = ?
                 LIMIT ?, 10
                 """;
 
@@ -90,13 +89,16 @@ public enum WorkerDAO {
         ps.setInt(2, skip);
         @Cleanup ResultSet rs = ps.executeQuery();
 
-        List<SupervisorDTO> list = new ArrayList<>();
+        List<WorkerVO> list = new ArrayList<>();
 
         while(rs.next()) {
-            SupervisorDTO worker = SupervisorDTO.builder()
-                    .wname(rs.getString("wname"))
-                    .category(rs.getString("category"))
+            WorkerVO worker = WorkerVO.builder()
+                    .wno(rs.getInt("wno"))
                     .wid(rs.getInt("wid"))
+                    .wname(rs.getString("wname"))
+                    .wdelflag(rs.getBoolean("wdelflag"))
+                    .sid(rs.getString("sid"))
+
                     .build();
 
             log.info(worker);

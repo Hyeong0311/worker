@@ -23,8 +23,8 @@ public class SupervisorController extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/slogin.jsp").forward(req, resp);
     }
 
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        log.info("supervisor doPost");
 //
 //        String sid = req.getParameter("sid");
@@ -57,7 +57,7 @@ public class SupervisorController extends HttpServlet {
 //        } catch (Exception e) {
 //            throw new RuntimeException(e);
 //        }
-//
-//
-//    }
+
+
+    }
 }
