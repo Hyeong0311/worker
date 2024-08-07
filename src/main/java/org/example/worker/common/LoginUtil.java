@@ -104,7 +104,7 @@ public enum LoginUtil {
         return Optional.of(vo);
     }
 
-    public Optional<WorkerVO> getworker(String wid) throws Exception {
+    public Optional<WorkerVO> getworker(Integer wid) throws Exception {
         String sql = """
                 select *
                 from worker
@@ -112,7 +112,7 @@ public enum LoginUtil {
                 """;
         @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
         @Cleanup PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, wid);
+        ps.setInt(1, wid);
         @Cleanup ResultSet rs = ps.executeQuery();
 
         if(!rs.next()) {
