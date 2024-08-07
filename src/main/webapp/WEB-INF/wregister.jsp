@@ -21,9 +21,10 @@
     <input type="text" name="wname">
 
     <label>SID</label>
-    <input type="text" name="sid">
+    <input type="text" name="sid" value="${cookieSid}">
 
     <button>register</button>
 </form>
+<a href ="/page/normal?sid=${cookieSid}"><button>목록</button></a>
 </body>
 </html>

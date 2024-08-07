@@ -22,6 +22,11 @@ public class WorkerRegisterController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.info("wregister get");
 
+        Cookie sidCookie = CookieUtil.getCookie(req, "supervisor");
+        String cookieSid = (sidCookie != null) ? sidCookie.getValue() : "";
+
+        req.setAttribute("cookieSid", cookieSid);
+
         req.getRequestDispatcher("/WEB-INF/wregister.jsp").forward(req, resp);
     }
 
@@ -36,6 +41,7 @@ public class WorkerRegisterController extends HttpServlet {
 
         Cookie sidCookie = CookieUtil.getCookie(req, "supervisor");
 
+
         if(sidCookie == null){
             log.info("cookies is empty--------------");
             resp.sendRedirect("/login/supervisor");
@@ -43,7 +49,6 @@ public class WorkerRegisterController extends HttpServlet {
         }
 
         String cookieSid = sidCookie.getValue();
-
         if (cookieSid == null || !cookieSid.equals(sid)) {
             log.info("not equals sid");
             resp.sendRedirect("/login/supervisor?error=invalidSid");
@@ -56,9 +61,6 @@ public class WorkerRegisterController extends HttpServlet {
                 .wname(wname)
                 .sid(sid)
                 .build();
-
-
-
 
         try {
             WorkerDAO.INSTANCE.wInsert(worker);
