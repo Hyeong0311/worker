@@ -35,7 +35,7 @@ public class SupervisorLoginController extends HttpServlet {
         String spw = req.getParameter("pw");
 
         try {
-            Optional<SupervisorVO> result = LoginUtil.INSTANCE.get(sid,spw);
+            Optional<SupervisorVO> result = LoginUtil.INSTANCE.getSupervisor(sid,spw);
             result.ifPresentOrElse(SupervisorVO -> {
                 Cookie superCookie = new Cookie("supervisor", sid);
                 superCookie.setPath("/");

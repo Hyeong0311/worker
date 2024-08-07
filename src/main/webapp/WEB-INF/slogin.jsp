@@ -24,7 +24,7 @@
 <body>
 
 <form id="myForm" method="post" onsubmit="setFormAction()">
-    <input type="radio" name="option" value="supervisor" id="supervisor">
+    <input type="radio" name="option" value="supervisor" id="supervisor" checked>
     <label for="supervisor">Supervisor</label><br>
 
     <input type="radio" name="option" value="hr" id="hr">
