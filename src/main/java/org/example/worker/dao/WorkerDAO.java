@@ -133,7 +133,6 @@ public enum WorkerDAO {
                 .wname(rs.getString("wname"))
                 .wdelflag(rs.getBoolean("wdelflag"))
                 .sid(rs.getString("sid"))
-                .time(rs.getTimestamp("time"))
                 .build();
 
         return Optional.of(worker);
@@ -146,11 +145,6 @@ public enum WorkerDAO {
         @Cleanup PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1,sid);
 
-        int count = ps.executeUpdate();
-
-        if(count != 1) {
-            throw new Exception();
-        }
     }
 
 }

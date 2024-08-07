@@ -17,5 +17,4 @@ public class WorkerVO {
     private String wname;
     private boolean wdelflag;
     private String sid;
-    private Timestamp time;
 }
