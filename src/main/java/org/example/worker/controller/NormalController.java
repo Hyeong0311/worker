@@ -47,7 +47,7 @@ public class NormalController extends HttpServlet {
             PageInfo pageInfo = new PageInfo(page, 10, total);
 
             // Fetch worker list
-            List<SupervisorDTO> workvoList = WorkerDAO.INSTANCE.wListSuper(sid, pageInfo.getPage());
+            List<WorkerVO> workvoList = WorkerDAO.INSTANCE.wListSuper(sid, pageInfo.getPage());
 
             // Set attributes for the request
             req.setAttribute("workvoList", workvoList);

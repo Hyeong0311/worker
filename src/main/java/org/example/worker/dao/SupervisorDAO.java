@@ -16,38 +16,38 @@ import java.util.Optional;
 public enum SupervisorDAO {
     INSTANCE;
 
-    public Optional<SupervisorVO> get(String sid, String spw, String dept) throws Exception {
-        String sql = """
-                select * from supervisor
-                where
-                    sid = ?
-                and
-                    spw = ?
-                and
-                    dept = ?
-                and
-                    sdelflag = 0
-                ;
-                """;
-        @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
-        @Cleanup PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, sid);
-        ps.setString(2, spw);
-        ps.setString(3, dept);
-        @Cleanup ResultSet rs = ps.executeQuery();
-        if (!rs.next()) {
-            return Optional.empty();
-        }
-
-        SupervisorVO vo = SupervisorVO.builder()
-                .sid(rs.getString("sid"))
-                .spw(rs.getString("spw"))
-                .dept(rs.getString("dept"))
-                .sdelflag(rs.getBoolean("sdelflag"))
-                .build();
-
-        return Optional.of(vo);
-    }
+//    public Optional<SupervisorVO> get(String sid, String spw, String dept) throws Exception {
+//        String sql = """
+//                select * from supervisor
+//                where
+//                    sid = ?
+//                and
+//                    spw = ?
+//                and
+//                    dept = ?
+//                and
+//                    sdelflag = 0
+//                ;
+//                """;
+//        @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
+//        @Cleanup PreparedStatement ps = con.prepareStatement(sql);
+//        ps.setString(1, sid);
+//        ps.setString(2, spw);
+//        ps.setString(3, dept);
+//        @Cleanup ResultSet rs = ps.executeQuery();
+//        if (!rs.next()) {
+//            return Optional.empty();
+//        }
+//
+//        SupervisorVO vo = SupervisorVO.builder()
+//                .sid(rs.getString("sid"))
+//                .spw(rs.getString("spw"))
+//                .dept(rs.getString("dept"))
+//                .sdelflag(rs.getBoolean("sdelflag"))
+//                .build();
+//
+//        return Optional.of(vo);
+//    }
 
     // AdminController 연결
     public List<SupervisorVO> getSupervisorList() throws Exception {
