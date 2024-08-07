@@ -15,17 +15,39 @@
     <h1>hr page</h1>
 
 
-    <c:if test="${list == null}">
-        <h3>null</h3>
-    </c:if>
+    <div>
+        <label>name</label>
+        <label>dept</label>
+        <label>wid</label>
+        <label>note</label>
+    </div>
 
     <c:forEach items="${list}" var="schedule">
         <li>
             <div>
-                <div>${schedule}</div>
+                <a href="/page/hr/list?wid=${schedule.wid}">${schedule.wname}</a>
+
+                <lable>${schedule.dept}</lable>
+                <lable>${schedule.wid}</lable>
+                <lable>${schedule.note}</lable>
             </div>
         </li>
     </c:forEach>
+
+
+    <ui class = "pagination">
+        <c:if test="${pageInfo.prev}">
+            <li class = "page-item"><a class = "page-link" href="/page/hr?page=${pageInfo.start - 1}">Prev</a></li>
+        </c:if>
+
+        <c:forEach begin = "${pageInfo.start}" end = "${pageInfo.end}" var = "num">
+            <li calss = "page-item" ${pageInfo.page == num ? 'active' : ''}><a class = "page-link" href = "/page/hr?page=${num}">${num}</a></li>
+        </c:forEach>
+
+        <c:if test="${pageInfo.next}">
+            <li class = "page-item"><a class = "page-link" href="/page/hr?page=${pageInfo.end + 1}">Next</a></li>
+        </c:if>
+    </ui>
 
 </body>
 </html>

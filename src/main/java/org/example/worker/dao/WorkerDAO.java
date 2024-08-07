@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Log4j2
@@ -49,6 +50,7 @@ public enum WorkerDAO {
         @Cleanup PreparedStatement ps = con.prepareStatement(sql);
 
         ps.setInt(1, wno);
+        log.info("wno: " + wno);
 
         int count = ps.executeUpdate();
         if(count != 1) {
@@ -106,6 +108,33 @@ public enum WorkerDAO {
             list.add(worker);
         }
         return list;
+    }
+
+    public Optional<WorkerVO> getworker(Integer wno) throws Exception {
+        String sql = """
+                select wno, wno, wid, wname, wdelflag, sid, time
+                    from worker
+                where wno = ?
+                """;
+
+        @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
+        @Cleanup PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, wno);
+        @Cleanup ResultSet rs = ps.executeQuery();
+
+        if(!rs.next()) {
+            return Optional.empty();
+        }
+        WorkerVO worker = WorkerVO.builder()
+                .wno(rs.getInt("wno"))
+                .wid(rs.getInt("wid"))
+                .wname(rs.getString("wname"))
+                .wdelflag(rs.getBoolean("wdelflag"))
+                .sid(rs.getString("sid"))
+                .time(rs.getTimestamp("time"))
+                .build();
+
+        return Optional.of(worker);
     }
 
 }
