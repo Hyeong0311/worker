@@ -20,10 +20,13 @@ public class HRController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        log.info("HRController");
+
         try {
             List<HRListDTO> scheduleList = ScheduleDAO.INSTANCE.HRList();
             req.setAttribute("list", scheduleList);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
