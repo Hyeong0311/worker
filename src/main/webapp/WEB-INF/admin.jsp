@@ -13,12 +13,19 @@
         <th>부서</th>
         <th>아이디</th>
         <th>비밀번호</th>
+        <th>삭제</th>
     </tr>
     <c:forEach var="supervisor" items="${supervisorList}">
         <tr>
             <td>${supervisor.dept}</td>
             <td>${supervisor.sid}</td>
             <td>${supervisor.spw}</td>
+            <td>
+                <form action="/page/admin/deleteSupervisor" method="post" style="display:inline;">
+                    <input type="hidden" name="sid" value="${supervisor.sid}">
+                    <button type="submit">삭제</button>
+                </form>
+            </td>
         </tr>
     </c:forEach>
 </table>
