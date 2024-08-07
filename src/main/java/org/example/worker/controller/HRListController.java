@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.example.worker.common.StringUtil;
 import org.example.worker.dao.ScheduleDAO;
 import org.example.worker.vo.HRListDTO;
+import org.example.worker.vo.SalaryCheckDTO;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -25,18 +26,35 @@ public class HRListController extends HttpServlet {
         Integer wid = StringUtil.getInt(widStr, -1);
 
         try{
-            Optional<HRListDTO> inTime = ScheduleDAO.INSTANCE.getIntime(wid);
-            HRListDTO inDTO = inTime.orElseThrow();
+            HRListDTO inTime = ScheduleDAO.INSTANCE.getIntime(wid);
+            HRListDTO outTime = ScheduleDAO.INSTANCE.getOuttime(wid);
+            SalaryCheckDTO result;
+            String message = "";
 
-            Optional<HRListDTO> outTime = ScheduleDAO.INSTANCE.getOuttime(wid);
-            HRListDTO outDTO = outTime.orElseThrow();
+            if(inTime == null) {
+                message = "InTime Null";
+                result = null;
+            } else if(outTime == null) {
+                message = "OutTime Null";
+                result = null;
+            }else {
+                result = SalaryCheckDTO.builder()
+                        .wname(inTime.getWname())
+                        .in(inTime.getTime())
+                        .out(outTime.getTime())
+                        .dept(inTime.getDept())
+                        .wid(inTime.getWid())
+                        .build();
 
-            log.info(inDTO.toString());
-            log.info(outDTO.toString());
+                int time = ScheduleDAO.INSTANCE.getTime(result.getIn(), result.getOut());
+                int salary = ScheduleDAO.INSTANCE.getSalary(time);
 
+                req.setAttribute("time", time);
+                req.setAttribute("salary", salary);
+            }
 
-
-
+            req.setAttribute("message", message);
+            req.setAttribute("result", result);
             req.getRequestDispatcher("/WEB-INF/hrlist.jsp").forward(req, resp);
 
         }catch(Exception e){

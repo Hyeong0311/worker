@@ -27,9 +27,9 @@
             <div>
                 <a href="/page/hr/list?wid=${schedule.wid}">${schedule.wname}</a>
 
-                <lable>${schedule.dept}</lable>
-                <lable>${schedule.wid}</lable>
-                <lable>${schedule.note}</lable>
+                <label>${schedule.dept}</label>
+                <label>${schedule.wid}</label>
+                <label>${schedule.note}</label>
             </div>
         </li>
     </c:forEach>

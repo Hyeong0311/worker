@@ -10,6 +10,7 @@ import org.example.worker.vo.ScheduleVO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -115,7 +116,7 @@ public enum ScheduleDAO  {
         return rs.getInt(1);
     }
 
-    public Optional<HRListDTO> getIntime(Integer wid) throws Exception {
+    public HRListDTO getIntime(Integer wid) throws Exception {
 
         String query = """
                 select
@@ -142,7 +143,7 @@ public enum ScheduleDAO  {
 
         @Cleanup ResultSet rs = ps.executeQuery();
         if(!rs.next()) {
-            return Optional.empty();
+            return null;
         }
 
         HRListDTO vo = HRListDTO.builder()
@@ -154,10 +155,10 @@ public enum ScheduleDAO  {
                 .note(rs.getString("note"))
                 .build();
 
-        return Optional.of(vo);
+        return vo;
     }
 
-    public Optional<HRListDTO> getOuttime(Integer wid) throws Exception {
+    public HRListDTO getOuttime(Integer wid) throws Exception {
 
         String query = """
                 select
@@ -184,7 +185,7 @@ public enum ScheduleDAO  {
 
         @Cleanup ResultSet rs = ps.executeQuery();
         if(!rs.next()) {
-            return Optional.empty();
+            return null;
         }
 
         HRListDTO vo = HRListDTO.builder()
@@ -196,7 +197,25 @@ public enum ScheduleDAO  {
                 .note(rs.getString("note"))
                 .build();
 
-        return Optional.of(vo);
+        return vo;
+    }
+
+    public int getTime(Timestamp in, Timestamp out) throws Exception {
+
+        long tmp = out.getTime() - in.getTime();
+
+        tmp = tmp / (60 * 1000);
+
+        return (int)tmp;
+    }
+
+    public int getSalary(int time) {
+
+        int hourlyPay = 10000;
+
+        int hour = time / 60;
+
+        return hourlyPay * hour;
     }
 
 
