@@ -104,7 +104,7 @@ public enum LoginUtil {
         return Optional.of(vo);
     }
 
-    public Optional<WorkerVO> getworker(Integer wid) throws Exception {
+    public Optional<WorkerVO> getworker(int wid) throws Exception {
         String sql = """
                 select *
                 from worker
