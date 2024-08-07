@@ -9,21 +9,13 @@ import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 
-@WebServlet(value="/login/hr")
+@WebServlet("/login/admin")
 @Log4j2
-public class HRLoginController extends HttpServlet {
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
+public class AdminLoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.info("HRLoginController");
 
-        log.info("HRLoginController");
 
-        resp.sendRedirect("/page/hr");
     }
 }
