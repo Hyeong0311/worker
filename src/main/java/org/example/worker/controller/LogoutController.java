@@ -10,9 +10,9 @@ import java.io.IOException;
 
 @WebServlet(value = {"/logout"})  // 배열 형태로 수정
 public class LogoutController extends HttpServlet {
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 모든 쿠키 제거
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
