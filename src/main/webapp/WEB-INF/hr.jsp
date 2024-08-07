@@ -48,5 +48,4 @@
         </c:if>
     </ui>
 
-</body>
-</html>
+    <%@include file="../includes/logoutfooter.jsp"%>

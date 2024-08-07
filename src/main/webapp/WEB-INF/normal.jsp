@@ -65,5 +65,4 @@
 
 <%--</ul>--%>
 
-</body>
-</html>
+<%@include file="../includes/logoutfooter.jsp"%>
