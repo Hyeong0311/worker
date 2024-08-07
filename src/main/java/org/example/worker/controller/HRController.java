@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Log4j2
-@WebServlet(value = "/page/hrlist")
+@WebServlet(value = "/page/hr")
 public class HRController extends HttpServlet {
 
     @Override
@@ -26,6 +26,7 @@ public class HRController extends HttpServlet {
             List<HRListDTO> scheduleList = ScheduleDAO.INSTANCE.HRList();
             req.setAttribute("list", scheduleList);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
