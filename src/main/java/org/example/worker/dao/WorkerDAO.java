@@ -78,10 +78,12 @@ public enum WorkerDAO {
         int skip = (page - 1) *10;
 
         String sql = """
-                SELECT w.*, s.time AS schedule_time
-                FROM worker w
-                         LEFT JOIN schedule s ON w.wid = s.wid
-                WHERE w.wno > 0 AND w.wdelflag = 0 AND w.sid = ?
+                select
+                    wno, wname, wid, sid, wdelflag
+                from
+                    worker
+                where
+                    sid = ?
                 LIMIT ?, 10
                 """;
 
@@ -112,7 +114,7 @@ public enum WorkerDAO {
 
     public Optional<WorkerVO> getworker(Integer wno) throws Exception {
         String sql = """
-                select wno, wno, wid, wname, wdelflag, sid, time
+                select wno, wno, wid, wname, wdelflag, sid
                     from worker
                 where wno = ?
                 """;
