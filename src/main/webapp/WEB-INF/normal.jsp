@@ -7,8 +7,10 @@
     <title>Title</title>
 </head>
 <body>
-<h1 class="head"> ${cksCookie} Supervisor page</h1><a href="/page/normal/wregister"><button>register</button></a>
+<h1 class="head"> ${cksCookie} Supervisor page</h1>
 
+<a href="/page/normal/wregister"><button>register</button></a>
+<a href="/page/normal/allremove"><button>AllRemove</button></a>
 
 <style>
     .head{
