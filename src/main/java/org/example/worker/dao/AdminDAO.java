@@ -48,4 +48,21 @@ public enum AdminDAO {
         }
         return adminList;
     }
+
+    public AdminVO getAdminByIdAndPassword(String id, String password) throws Exception {
+        String sql = "SELECT * FROM admin WHERE aid = ? AND apw = ?";
+        @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
+        @Cleanup PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, id);
+        ps.setString(2, password);
+        @Cleanup ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return AdminVO.builder()
+                    .aid(rs.getString("aid"))
+                    .apw(rs.getString("apw"))
+                    .build();
+        }
+        return null;
+    }
 }
