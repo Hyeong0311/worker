@@ -21,7 +21,12 @@ public class SupervisorLoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        log.info("Supervsior post");
 
+        log.info(req.getParameter("id"));
+        log.info(req.getParameter("pw"));
+
+        resp.sendRedirect("/page/normal");
 
     }
 }
