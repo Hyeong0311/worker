@@ -8,15 +8,15 @@ import org.example.worker.vo.SupervisorVO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Log4j2
 public enum SupervisorDAO {
     INSTANCE;
 
-
-    public Optional<SupervisorVO> get(String sid, String spw, String dept) throws Exception{
-
+    public Optional<SupervisorVO> get(String sid, String spw, String dept) throws Exception {
         String sql = """
                 select * from supervisor
                 where
@@ -49,4 +49,25 @@ public enum SupervisorDAO {
         return Optional.of(vo);
     }
 
+    // AdminController 연결
+    public List<SupervisorVO> getSupervisorList() throws Exception {
+        List<SupervisorVO> supervisorList = new ArrayList<>();
+        String sql = "select * from supervisor where sdelflag = 0";
+
+        @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
+        @Cleanup PreparedStatement ps = con.prepareStatement(sql);
+        @Cleanup ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            SupervisorVO vo = SupervisorVO.builder()
+                    .sid(rs.getString("sid"))
+                    .spw(rs.getString("spw"))
+                    .dept(rs.getString("dept"))
+                    .sdelflag(rs.getBoolean("sdelflag"))
+                    .build();
+            supervisorList.add(vo);
+        }
+
+        return supervisorList;
+    }
 }
