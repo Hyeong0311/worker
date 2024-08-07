@@ -15,7 +15,6 @@ public class SupervisorLoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.info("Supervisor Login Page");
 
     }
 
@@ -28,8 +27,6 @@ public class SupervisorLoginController extends HttpServlet {
         log.info(req.getParameter("pw"));
 
         resp.sendRedirect("/page/normal");
-
-
 
     }
 }
