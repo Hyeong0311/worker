@@ -38,7 +38,7 @@ public class AllRemoveController extends HttpServlet {
         String cookieSid = sidCookie.getValue();
 
         try {
-            WorkerDAO.INSTANCE.allRemove();
+            WorkerDAO.INSTANCE.allRemove(cookieSid);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
