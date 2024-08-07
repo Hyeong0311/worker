@@ -137,4 +137,18 @@ public enum WorkerDAO {
         return Optional.of(worker);
     }
 
+    public void allRemove(String sid) throws Exception {
+        String sql = "DELETE FROM worker WHERE sid = ?";
+
+        @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
+        @Cleanup PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1,sid);
+
+        int count = ps.executeUpdate();
+
+        if(count != 1) {
+            throw new Exception();
+        }
+    }
+
 }
