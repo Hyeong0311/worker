@@ -1,6 +1,7 @@
 package org.example.worker.common;
 
 import lombok.Cleanup;
+import org.example.worker.vo.AdminVO;
 import org.example.worker.vo.SupervisorVO;
 
 import java.sql.Connection;
@@ -71,6 +72,32 @@ public enum LoginUtil {
                 .spw(rs.getString("spw"))
                 .dept(rs.getString("dept"))
                 .sdelflag(rs.getBoolean("sdelflag"))
+                .build();
+
+        return Optional.of(vo);
+    }
+
+    public Optional<AdminVO> getAdmin(String aid, String apw) throws Exception {
+        String sql = """
+                select * from admin
+                where
+                    aid = ?
+                and
+                    apw = ?
+                ;
+                """;
+        @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
+        @Cleanup PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, aid);
+        ps.setString(2, apw);
+        @Cleanup ResultSet rs = ps.executeQuery();
+        if (!rs.next()) {
+            return Optional.empty();
+        }
+
+        AdminVO vo = AdminVO.builder()
+                .aid(rs.getString("aid"))
+                .apw(rs.getString("apw"))
                 .build();
 
         return Optional.of(vo);
