@@ -15,10 +15,17 @@
             padding: 8px;
             box-sizing: border-box;
         }
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
 <h1>Supervisor Register Page</h1>
+
+<c:if test="${not empty error}">
+    <div class="error">${error}</div>
+</c:if>
 
 <form action="/page/admin/mregister" method="post">
     <div class="input-group">
