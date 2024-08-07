@@ -7,7 +7,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1 class="head">normal page</h1><a href="/page/normal/wregister"><button>register</button></a>
+<h1 class="head"> ${cksCookie} Supervisor page</h1><a href="/page/normal/wregister"><button>register</button></a>
 
 
 <style>
@@ -37,9 +37,9 @@
     <c:forEach items = "${workvoList}" var="worker">
         <li>
             <div>
-                <div> name : ${worker.wname}</div>
+                <div> name : <a href="/page/normal/wremove?wno=${worker.wno}">${worker.wname}</a></div>
                 <div> id : ${worker.wid}</div>
-                <div> time : ${worker.time}</div>
+<%--                <div> time : ${worker.time}</div>--%>
             </div>
         </li>
     </c:forEach>

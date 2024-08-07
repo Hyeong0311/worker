@@ -2,10 +2,12 @@ package org.example.worker.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
+import org.example.worker.common.CookieUtil;
 import org.example.worker.common.PageInfo;
 import org.example.worker.common.StringUtil;
 import org.example.worker.dao.ScheduleDAO;
@@ -38,6 +40,12 @@ public class NormalController extends HttpServlet {
         // Extract parameters from the request
         String pageStr = req.getParameter("page");
         String sid = req.getParameter("sid");
+
+        Cookie cks = CookieUtil.getCookie(req,"supervisor");
+
+        String cksCookie = cks.getValue();
+
+        req.setAttribute("cksCookie", cksCookie);
 
         int page = StringUtil.getInt(pageStr, 1);
 
