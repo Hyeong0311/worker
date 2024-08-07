@@ -15,13 +15,12 @@ public class HRLoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.info("HRLoginController");
 
-        req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        resp.sendRedirect("/page/hr");
     }
 }

@@ -12,7 +12,7 @@
             // 폼의 action 속성을 선택된 값에 따라 설정
             var form = document.getElementById('myForm');
             if (selectedValue === "supervisor") {
-                form.action = "/login/supervisor";
+                form.action = "/login/super";
             } else if (selectedValue === "hr") {
                 form.action = "/login/hr";
             } else if (selectedValue === "ad") {
