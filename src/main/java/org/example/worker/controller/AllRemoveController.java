@@ -39,10 +39,9 @@ public class AllRemoveController extends HttpServlet {
 
         try {
             WorkerDAO.INSTANCE.allRemove(cookieSid);
-
+            resp.sendRedirect("/page/normal?sid="+cookieSid);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        resp.sendRedirect("/page/normal?sid="+cookieSid);
     }
 }
