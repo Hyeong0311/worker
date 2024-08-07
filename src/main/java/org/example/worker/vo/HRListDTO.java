@@ -15,6 +15,6 @@ public class HRListDTO {
     private String category;
     private Timestamp time;
     private String dept;
-    private int wid;
     private String note;
+    private int wid;
 }

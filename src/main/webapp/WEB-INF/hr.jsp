@@ -29,7 +29,6 @@
 
                 <label>${schedule.dept}</label>
                 <label>${schedule.wid}</label>
-                <label>${schedule.note}</label>
             </div>
         </li>
     </c:forEach>

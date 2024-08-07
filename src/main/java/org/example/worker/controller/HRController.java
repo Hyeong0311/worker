@@ -27,7 +27,7 @@ public class HRController extends HttpServlet {
         int page = StringUtil.getInt(pageStr, 1);
 
         try {
-            List<HRListDTO> scheduleList = ScheduleDAO.INSTANCE.HRList(page);
+            //List<HRListDTO> scheduleList = ScheduleDAO.INSTANCE.HRList(page);
 
             int total = ScheduleDAO.INSTANCE.getTotal();
 

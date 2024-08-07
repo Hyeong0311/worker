@@ -56,17 +56,14 @@ public enum ScheduleDAO  {
 
         String query = """
                 select
-                    tmp.wname, schedule.category, schedule.time,tmp.dept, tmp.wid, schedule.note
+                    worker.wname, supervisor.dept, worker.wid
                 from
-                    schedule inner join
-                    (
-                        select
-                            worker.wname, worker.wid, supervisor.dept
-                        from worker inner join supervisor on worker.sid = supervisor.sid
-                    ) tmp on schedule.wid = tmp.wid
+                    worker
+                inner join
+                    supervisor on worker.sid = supervisor.sid
                 where
-                    tmp.wid > 0
-                order by tmp.dept
+                    worker.wid > 0
+                order by supervisor.dept
                 limit ?, 10
                 """;
 
@@ -83,11 +80,8 @@ public enum ScheduleDAO  {
 
             HRListDTO dto = HRListDTO.builder()
                     .wname(rs.getString("wname"))
-                    .category(rs.getString("category"))
-                    .time(rs.getTimestamp("time"))
                     .dept(rs.getString("dept"))
                     .wid(rs.getInt("wid"))
-                    .note(rs.getString("note"))
                     .build();
 
             list.add(dto);
@@ -100,7 +94,7 @@ public enum ScheduleDAO  {
 
         String query = """
                 select
-                    count(scno)
+                    count(distinct wid)
                 from
                     schedule
                 where

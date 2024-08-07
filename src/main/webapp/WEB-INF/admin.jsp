@@ -39,5 +39,6 @@
     <input type="hidden" name="sid" />
     <input type="hidden" name="password" />
 </form>
-</body>
-</html>
+
+
+<%@include file="../includes/logoutfooter.jsp"%>
