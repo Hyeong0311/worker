@@ -2,6 +2,7 @@ package org.example.worker.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +11,7 @@ import org.example.worker.dao.SupervisorDAO;
 import org.example.worker.vo.SupervisorVO;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Log4j2
 @WebServlet(value = "/login/supervisor")
@@ -23,38 +25,39 @@ public class SupervisorController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info("supervisor doPost");
+
         String sid = req.getParameter("sid");
         String spw = req.getParameter("spw");
-
-        log.info("받은 파라미터 - 아이디: {}, 비밀번호: {}", sid, spw);
+        String dept = req.getParameter("dept");
 
         try {
-            SupervisorVO supervisorVO = SupervisorDAO.INSTANCE.loginSupervisor(sid);
-            if (supervisorVO != null && supervisorVO.getSpw().equals(spw)) {
-                log.info("로그인 성공 - 아이디: {}", sid);
-                switch (supervisorVO.getDept()) {
-                    case "manager":
-                        resp.sendRedirect("/page/normal"); // manager 선택 시 이동할 페이지
-                        break;
-                    case "hrd":
-                        resp.sendRedirect("/page/hr"); // HRD 선택 시 이동할 페이지
-                        break;
-                    case "admin":
-                        resp.sendRedirect("/page/admin"); // admin 선택 시 이동할 페이지
-                        break;
-                    default:
-                        log.info("잘못된 부서 정보");
-                        req.setAttribute("errorMessage", "잘못된 부서 정보입니다.");
-                        req.getRequestDispatcher("/WEB-INF/slogin.jsp").forward(req, resp);
+            Optional<SupervisorVO> result = SupervisorDAO.INSTANCE.get(sid,spw,dept);
+
+            result.ifPresentOrElse( supervisorVO -> {
+                Cookie superCookie = new Cookie("supervisor", sid);
+                superCookie.setPath("/");
+                superCookie.setMaxAge(3600);
+
+                resp.addCookie(superCookie);
+
+                try {
+                    resp.sendRedirect("/page/normal?sid="+sid); //admin,hr,normal세가지로 변경해줘야함
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-            } else {
-                log.info("로그인 실패 - 잘못된 아이디 또는 비밀번호");
-                req.setAttribute("errorMessage", "잘못된 아이디 또는 비밀번호입니다.");
-                req.getRequestDispatcher("/WEB-INF/slogin.jsp").forward(req, resp);
-            }
+            }, () -> {
+                try {
+                    resp.sendRedirect("/main");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            });
         } catch (Exception e) {
-            log.error("로그인 중 오류 발생", e);
             throw new RuntimeException(e);
         }
+
+
     }
 }

@@ -3,6 +3,8 @@ package org.example.worker.vo;
 
 import lombok.*;
 
+import java.sql.Timestamp;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -14,5 +16,6 @@ public class WorkerVO {
     private Integer wid;
     private String wname;
     private boolean wdelflag;
-    private String mid;
+    private String sid;
+    private Timestamp time;
 }

@@ -9,63 +9,65 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List; // 이 부분을 추가
+import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 public enum SupervisorDAO {
     INSTANCE;
 
-    SupervisorDAO() {
-    }
-
-    public void mInsert(SupervisorVO supervisorVO) throws Exception {
-        String sql = "insert into supervisor (sid, spw, dept) values (?, ?, ?)";
-        @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
-        @Cleanup PreparedStatement ps = con.prepareStatement(sql);
-
-        ps.setString(1, supervisorVO.getSid());
-        ps.setString(2, supervisorVO.getSpw());
-        ps.setString(3, supervisorVO.getDept());
-
-        int count = ps.executeUpdate();
-        if (count != 1) {
-            throw new Exception();
-        }
-    }
-
-    public SupervisorVO loginSupervisor(String sid) throws Exception {
-        String sql = "SELECT sid, spw, dept FROM supervisor WHERE sid = ?";
+    public Optional<SupervisorVO> get(String sid, String spw, String dept) throws Exception {
+        String sql = """
+                select * from supervisor
+                where
+                    sid = ?
+                and
+                    spw = ?
+                and
+                    dept = ?
+                and
+                    sdelflag = 0
+                ;
+                """;
         @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
         @Cleanup PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, sid);
+        ps.setString(2, spw);
+        ps.setString(3, dept);
         @Cleanup ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            return SupervisorVO.builder()
-                    .sid(rs.getString("sid"))
-                    .spw(rs.getString("spw"))
-                    .dept(rs.getString("dept"))
-                    .build();
-        } else {
-            return null;
+        if (!rs.next()) {
+            return Optional.empty();
         }
+
+        SupervisorVO vo = SupervisorVO.builder()
+                .sid(rs.getString("sid"))
+                .spw(rs.getString("spw"))
+                .dept(rs.getString("dept"))
+                .sdelflag(rs.getBoolean("sdelflag"))
+                .build();
+
+        return Optional.of(vo);
     }
 
+    // AdminController 연결
     public List<SupervisorVO> getSupervisorList() throws Exception {
-        String sql = "select sid, spw, dept from supervisor";
+        List<SupervisorVO> supervisorList = new ArrayList<>();
+        String sql = "select * from supervisor where sdelflag = 0";
+
         @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
         @Cleanup PreparedStatement ps = con.prepareStatement(sql);
         @Cleanup ResultSet rs = ps.executeQuery();
 
-        List<SupervisorVO> supervisorList = new ArrayList<>();
         while (rs.next()) {
-            SupervisorVO supervisor = SupervisorVO.builder()
+            SupervisorVO vo = SupervisorVO.builder()
                     .sid(rs.getString("sid"))
                     .spw(rs.getString("spw"))
                     .dept(rs.getString("dept"))
+                    .sdelflag(rs.getBoolean("sdelflag"))
                     .build();
-            supervisorList.add(supervisor);
+            supervisorList.add(vo);
         }
+
         return supervisorList;
     }
 }
