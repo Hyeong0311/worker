@@ -57,12 +57,9 @@ public enum ScheduleDAO  {
                     (
                         select
                             worker.wname, worker.wid, supervisor.dept
-                        from worker inner join supervisor
-                        where worker.sid = supervisor.sid
-                    ) tmp
+                        from worker inner join supervisor on worker.sid = supervisor.sid
+                    ) tmp on schedule.wid = tmp.wid
                 where
-                    schedule.wid = tmp.wid
-                    and
                     tmp.wid > 0
                 order by tmp.dept
                 """;
