@@ -3,6 +3,7 @@ package org.example.worker.common;
 import lombok.Cleanup;
 import org.example.worker.vo.AdminVO;
 import org.example.worker.vo.SupervisorVO;
+import org.example.worker.vo.WorkerVO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -102,4 +103,31 @@ public enum LoginUtil {
 
         return Optional.of(vo);
     }
+
+    public Optional<WorkerVO> getworker(String wid) throws Exception {
+        String sql = """
+                select *
+                from worker
+                where wid=?
+                """;
+        @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
+        @Cleanup PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, wid);
+        @Cleanup ResultSet rs = ps.executeQuery();
+
+        if(!rs.next()) {
+            return Optional.empty();
+        }
+
+        WorkerVO workervo = WorkerVO.builder()
+                .wno(rs.getInt("wno"))
+                .wid(rs.getInt("wid"))
+                .wname(rs.getString("wname"))
+                .wdelflag(rs.getBoolean("wdelflag"))
+                .sid(rs.getString("sid"))
+                .build();
+
+        return Optional.of(workervo);
+    }
+
 }
