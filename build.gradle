@@ -47,7 +47,6 @@ dependencies {
 
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.3'
 
-    implementation 'javax.servlet:jstl:1.2'
 }
 
 test {
