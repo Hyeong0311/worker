@@ -25,38 +25,6 @@ public class SupervisorController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        log.info("supervisor doPost");
-//
-//        String sid = req.getParameter("sid");
-//        String spw = req.getParameter("spw");
-//        String dept = req.getParameter("dept");
-//
-//        try {
-//            Optional<SupervisorVO> result = SupervisorDAO.INSTANCE.get(sid,spw,dept);
-//
-//            result.ifPresentOrElse( supervisorVO -> {
-//                Cookie superCookie = new Cookie("supervisor", sid);
-//                superCookie.setPath("/");
-//                superCookie.setMaxAge(3600);
-//
-//                resp.addCookie(superCookie);
-//
-//                try {
-//                    resp.sendRedirect("/page/normal?sid="+sid); //admin,hr,normal세가지로 변경해줘야함
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }, () -> {
-//                try {
-//                    resp.sendRedirect("/main");
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    throw new RuntimeException(e);
-//                }
-//            });
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
 
 
     }
