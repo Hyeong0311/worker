@@ -96,9 +96,9 @@ public enum ScheduleDAO  {
                 select
                     count(distinct wid)
                 from
-                    schedule
+                    worker
                 where
-                    scno > 0
+                    wno > 0
                 """;
 
         @Cleanup Connection con = ConnectionUtil.INSTANCE.getDs().getConnection();
